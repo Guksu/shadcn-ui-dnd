@@ -1,0 +1,1 @@
+export const BOARD_STORAGE_KEY = "BOARD_STORAGE_KEY";

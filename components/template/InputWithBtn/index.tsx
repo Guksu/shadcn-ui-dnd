@@ -5,6 +5,7 @@ interface Props {
   inputPlaceholder: string;
   buttonLabel: string;
   isSticky?: boolean;
+  inputValue: string;
   handleBtnClick: () => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -15,6 +16,7 @@ export default function InputWithBtn({
   isSticky,
   handleInputChange,
   handleBtnClick,
+  inputValue,
 }: Props) {
   return (
     <div
@@ -24,6 +26,7 @@ export default function InputWithBtn({
     >
       <Input
         type="text"
+        value={inputValue}
         onChange={handleInputChange}
         placeholder={inputPlaceholder}
       />

@@ -1,16 +1,21 @@
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { Todo } from "@/types";
 
 interface Props {
-  value: string;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  todoData: Todo;
 }
 
-export default function TodoItem({ value, handleInputChange }: Props) {
+export default function TodoItem({ todoData }: Props) {
   return (
     <div>
       <div className="flex items-center gap-4">
-        <Input value={value} onChange={handleInputChange} />
+        <Input value={todoData.title} onChange={() => {}} />
+        <img
+          src="/icon/check.svg"
+          alt="check"
+          className="cursor-pointer w-4 h-4"
+        />
         <img
           src="/icon/trash.svg"
           alt="delete"

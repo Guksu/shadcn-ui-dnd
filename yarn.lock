@@ -2130,7 +2130,7 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next@15.1.7:
+next@^15.1.7:
   version "15.1.7"
   resolved "https://registry.yarnpkg.com/next/-/next-15.1.7.tgz#e814845e7cdb0294aee88ceab0bb962de83e8e6f"
   integrity sha512-GNeINPGS9c6OZKCvKypbL8GTsT5GhWPp4DM0fzkXJuXMilOO2EeFxuAY6JZbtk6XIl6Ws10ag3xRINDjSO5+wg==
@@ -2432,12 +2432,12 @@ react-dnd@^16.0.1:
     fast-deep-equal "^3.1.3"
     hoist-non-react-statics "^3.3.2"
 
-react-dom@^19.0.0:
-  version "19.0.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.0.0.tgz#43446f1f01c65a4cd7f7588083e686a6726cfb57"
-  integrity sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==
+react-dom@^19.1.0-canary-ff628334-20250205:
+  version "19.1.0-canary-ff628334-20250205"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.1.0-canary-ff628334-20250205.tgz#cd9b9dd6f2726b68c11c1b50d4a4d3491e445ae4"
+  integrity sha512-O/FFWzQNHqKLavROUliPXDPAwJcjwDcFbZmg2YfsWtSDJj1pRFTNzYvOUChC/hgBQiIM5rAiznQjBw2D9naH1g==
   dependencies:
-    scheduler "^0.25.0"
+    scheduler "0.26.0-canary-ff628334-20250205"
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
@@ -2569,10 +2569,10 @@ safe-regex-test@^1.0.3, safe-regex-test@^1.1.0:
     es-errors "^1.3.0"
     is-regex "^1.2.1"
 
-scheduler@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.25.0.tgz#336cd9768e8cceebf52d3c80e3dcf5de23e7e015"
-  integrity sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==
+scheduler@0.26.0-canary-ff628334-20250205:
+  version "0.26.0-canary-ff628334-20250205"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.26.0-canary-ff628334-20250205.tgz#aee77579cf90ea243e4fb690c565dc73fa920bfe"
+  integrity sha512-U0tZuylPZVLsLMHfoqXdURMPdHXd8nBqqJXIQCiT0NQqY5wxc4I+Wsg1XFAY2WY0WRh6U0c3WMljp2JvRjXKow==
 
 semver@^6.3.1:
   version "6.3.1"
@@ -3048,6 +3048,11 @@ util-deprecate@^1.0.2:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
+uuid@^11.0.5:
+  version "11.0.5"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-11.0.5.tgz#07b46bdfa6310c92c3fb3953a8720f170427fc62"
+  integrity sha512-508e6IcKLrhxKdBbcA2b4KQZlLVp2+J5UwQ6F7Drckkc5N9ZJwFa4TgWtsww9UG8fGHbm6gbV19TdM5pQ4GaIA==
+
 which-boxed-primitive@^1.1.0, which-boxed-primitive@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/which-boxed-primitive/-/which-boxed-primitive-1.1.1.tgz#d76ec27df7fa165f18d5808374a5fe23c29b176e"
@@ -3139,3 +3144,8 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zustand@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-5.0.3.tgz#b323435b73d06b2512e93c77239634374b0e407f"
+  integrity sha512-14fwWQtU3pH4dE0dOpdMiWjddcH+QzKIgk1cl8epwSE7yag43k/AD/m4L6+K7DytAOr9gGBe3/EXj9g7cdostg==
