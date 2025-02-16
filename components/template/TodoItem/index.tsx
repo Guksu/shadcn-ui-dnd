@@ -9,7 +9,14 @@ interface Props {
 export default function TodoItem({ value, handleInputChange }: Props) {
   return (
     <div>
-      <Input value={value} onChange={handleInputChange} />
+      <div className="flex items-center gap-4">
+        <Input value={value} onChange={handleInputChange} />
+        <img
+          src="/icon/trash.svg"
+          alt="delete"
+          className="cursor-pointer w-4 h-4"
+        />
+      </div>
       <Separator className="my-2" />
     </div>
   );
