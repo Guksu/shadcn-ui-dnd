@@ -13,6 +13,10 @@ interface Props {
   boardData: Board;
 }
 
+type BoardDropItem = {
+  id: string;
+};
+
 export default function TodoBoard({ boardData }: Props) {
   const { id, title, todo } = boardData;
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -34,7 +38,7 @@ export default function TodoBoard({ boardData }: Props) {
 
   const [, drop] = useDrop({
     accept: BOARD_DND_TYPE,
-    hover: (item: { id: string; targetId: string }) => {
+    hover: (item: BoardDropItem) => {
       if (item.id !== id) {
         moveBoard(item.id, id);
       }

@@ -10,6 +10,11 @@ interface Props {
   boardId: string;
 }
 
+type TodoDropItem = {
+  id: string;
+  boardId: string;
+};
+
 export default function TodoItem({ todoData, boardId }: Props) {
   const [inputValue, setInputValue] = useState<string>(todoData.title);
   const updateTodo = boardStore((state) => state.updateTodo);
@@ -26,7 +31,7 @@ export default function TodoItem({ todoData, boardId }: Props) {
 
   const [, drop] = useDrop({
     accept: TODO_DND_TYPE,
-    hover: (item: { id: string; boardId: string }) => {
+    hover: (item: TodoDropItem) => {
       if (item.id !== todoData.id) {
         moveTodo(item.id, boardId, todoData.id);
       }
