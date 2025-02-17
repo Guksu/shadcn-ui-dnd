@@ -117,10 +117,11 @@ export default function TodoBoard({ boardData }: Props) {
             </>
           )}
         </div>
-
-        {todo.map((todoData) => (
-          <TodoItem todoData={todoData} key={todoData.id} boardId={id} />
-        ))}
+        <div className="flex flex-col gap-4">
+          {todo.map((todoData) => (
+            <TodoItem todoData={todoData} key={todoData.id} boardId={id} />
+          ))}
+        </div>
       </div>
       <InputWithBtn
         buttonLabel="Add Todo"

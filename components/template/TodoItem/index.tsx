@@ -1,5 +1,4 @@
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { TODO_DND_TYPE } from "@/constants";
 import boardStore from "@/store/boardStore";
 import { Todo } from "@/types";
@@ -89,7 +88,6 @@ export default function TodoItem({ todoData, boardId }: Props) {
           onClick={handleDeleteTodo}
         />
       </div>
-      <Separator className="my-2" />
     </div>
   );
 }
