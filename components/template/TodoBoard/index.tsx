@@ -3,8 +3,9 @@ import InputWithBtn from "../InputWithBtn";
 import TodoItem from "../TodoItem";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Board } from "@/types";
+import { Board, Todo } from "@/types";
 import boardStore from "@/store/boardStore";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {
   boardData: Board;
@@ -14,9 +15,11 @@ export default function TodoBoard({ boardData }: Props) {
   const { id, title, todo } = boardData;
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [baordTilted, setBoardTilted] = useState<string>(title);
+  const [newTodoInput, setNewTodoInput] = useState<string>("");
 
   const updateBoard = boardStore((state) => state.updateBoard);
   const deleteBoard = boardStore((state) => state.deleteBoard);
+  const addTodo = boardStore((state) => state.addTodo);
 
   const handleUpdateBoardName = () => {
     setIsEditing(false);
@@ -29,6 +32,25 @@ export default function TodoBoard({ boardData }: Props) {
 
   const handleDeleteBoard = () => {
     deleteBoard(id);
+  };
+
+  const handleNewTodoInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTodoInput(e.currentTarget.value);
+  };
+
+  const handleAddTodo = () => {
+    if (newTodoInput.trim() === "") {
+      alert("Please enter a todo");
+      return;
+    }
+
+    const newTodo: Todo = {
+      id: uuidv4(),
+      title: newTodoInput,
+      done: false,
+    };
+    addTodo(id, newTodo);
+    setNewTodoInput("");
   };
 
   return (
@@ -70,20 +92,18 @@ export default function TodoBoard({ boardData }: Props) {
             )}
           </div>
 
-          {todo.map((todoData, index) => (
-            <TodoItem todoData={todoData} key={index} />
+          {todo.map((todoData) => (
+            <TodoItem todoData={todoData} key={todoData.id} boardId={id} />
           ))}
         </div>
-        {!isEditing && (
-          <InputWithBtn
-            buttonLabel="Add Todo"
-            inputPlaceholder="Add Todo"
-            isSticky
-            handleBtnClick={() => {}}
-            handleInputChange={() => {}}
-            inputValue=""
-          />
-        )}
+        <InputWithBtn
+          buttonLabel="Add Todo"
+          inputPlaceholder="Add Todo"
+          isSticky
+          handleBtnClick={handleAddTodo}
+          handleInputChange={handleNewTodoInputChange}
+          inputValue={newTodoInput}
+        />
       </ScrollArea>
     </div>
   );
