@@ -23,10 +23,7 @@ export default function TodoBoard({ boardData }: Props) {
   const [baordTilted, setBoardTilted] = useState<string>(title);
   const [newTodoInput, setNewTodoInput] = useState<string>("");
 
-  const updateBoard = boardStore((state) => state.updateBoard);
-  const deleteBoard = boardStore((state) => state.deleteBoard);
-  const addTodo = boardStore((state) => state.addTodo);
-  const moveBoard = boardStore((state) => state.moveBoard);
+  const { updateBoard, deleteBoard, addTodo, moveBoard } = boardStore();
 
   const [{ isDragging }, drag] = useDrag({
     type: BOARD_DND_TYPE,

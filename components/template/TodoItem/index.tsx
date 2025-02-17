@@ -17,9 +17,7 @@ type TodoDropItem = {
 
 export default function TodoItem({ todoData, boardId }: Props) {
   const [inputValue, setInputValue] = useState<string>(todoData.title);
-  const updateTodo = boardStore((state) => state.updateTodo);
-  const deleteTodo = boardStore((state) => state.deleteTodo);
-  const moveTodo = boardStore((state) => state.moveTodo);
+  const { updateTodo, deleteTodo, moveTodo } = boardStore();
 
   const [{ isDragging }, drag] = useDrag({
     type: TODO_DND_TYPE,
