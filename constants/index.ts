@@ -1,1 +1,3 @@
 export const BOARD_STORAGE_KEY = "BOARD_STORAGE_KEY";
+export const BOARD_DND_TYPE = "BOARD_DND_TYPE";
+export const TODO_DND_TYPE = "TODO_DND_TYPE";

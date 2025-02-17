@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Board, Todo } from "@/types";
 import boardStore from "@/store/boardStore";
 import { v4 as uuidv4 } from "uuid";
+import { useDrag, useDrop } from "react-dnd";
+import { BOARD_DND_TYPE } from "@/constants";
 
 interface Props {
   boardData: Board;
@@ -20,6 +22,24 @@ export default function TodoBoard({ boardData }: Props) {
   const updateBoard = boardStore((state) => state.updateBoard);
   const deleteBoard = boardStore((state) => state.deleteBoard);
   const addTodo = boardStore((state) => state.addTodo);
+  const moveBoard = boardStore((state) => state.moveBoard);
+
+  const [{ isDragging }, drag] = useDrag({
+    type: BOARD_DND_TYPE,
+    item: { id },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  const [, drop] = useDrop({
+    accept: BOARD_DND_TYPE,
+    hover: (item: { id: string; targetId: string }) => {
+      if (item.id !== id) {
+        moveBoard(item.id, id);
+      }
+    },
+  });
 
   const handleUpdateBoardName = () => {
     setIsEditing(false);
@@ -54,57 +74,62 @@ export default function TodoBoard({ boardData }: Props) {
   };
 
   return (
-    <div>
-      <ScrollArea className="max-h-96 w-80 rounded-md border ">
-        <div className="p-4">
-          <div className="flex justify-between items-center mb-8 gap-6">
-            {isEditing ? (
-              <>
-                <Input
-                  value={baordTilted}
-                  onChange={(e) => setBoardTilted(e.currentTarget.value)}
+    <ScrollArea
+      ref={(node) => {
+        if (node) {
+          drag(drop(node));
+        }
+      }}
+      className={`max-h-96 w-80 rounded-md border ${isDragging} ? "opacity-50" : ""`}
+    >
+      <div className="p-4">
+        <div className="flex justify-between items-center mb-8 gap-6">
+          {isEditing ? (
+            <>
+              <Input
+                value={baordTilted}
+                onChange={(e) => setBoardTilted(e.currentTarget.value)}
+              />
+              <img
+                src="/icon/check.svg"
+                alt="check"
+                className="w-4 h-4"
+                onClick={handleUpdateBoardName}
+              />
+            </>
+          ) : (
+            <>
+              <h4 className="text-sm font-medium leading-none">{title}</h4>
+              <span className="flex gap-4">
+                <img
+                  src="/icon/edit.svg"
+                  alt="edit"
+                  className="w-4 h-4 cursor-pointer"
+                  onClick={() => setIsEditing(true)}
                 />
                 <img
-                  src="/icon/check.svg"
-                  alt="check"
-                  className="w-4 h-4"
-                  onClick={handleUpdateBoardName}
+                  src="/icon/trash.svg"
+                  alt="delete"
+                  className="cursor-pointer w-4 h-4"
+                  onClick={handleDeleteBoard}
                 />
-              </>
-            ) : (
-              <>
-                <h4 className="text-sm font-medium leading-none">{title}</h4>
-                <span className="flex gap-4">
-                  <img
-                    src="/icon/edit.svg"
-                    alt="edit"
-                    className="w-4 h-4 cursor-pointer"
-                    onClick={() => setIsEditing(true)}
-                  />
-                  <img
-                    src="/icon/trash.svg"
-                    alt="delete"
-                    className="cursor-pointer w-4 h-4"
-                    onClick={handleDeleteBoard}
-                  />
-                </span>
-              </>
-            )}
-          </div>
-
-          {todo.map((todoData) => (
-            <TodoItem todoData={todoData} key={todoData.id} boardId={id} />
-          ))}
+              </span>
+            </>
+          )}
         </div>
-        <InputWithBtn
-          buttonLabel="Add Todo"
-          inputPlaceholder="Add Todo"
-          isSticky
-          handleBtnClick={handleAddTodo}
-          handleInputChange={handleNewTodoInputChange}
-          inputValue={newTodoInput}
-        />
-      </ScrollArea>
-    </div>
+
+        {todo.map((todoData) => (
+          <TodoItem todoData={todoData} key={todoData.id} boardId={id} />
+        ))}
+      </div>
+      <InputWithBtn
+        buttonLabel="Add Todo"
+        inputPlaceholder="Add Todo"
+        isSticky
+        handleBtnClick={handleAddTodo}
+        handleInputChange={handleNewTodoInputChange}
+        inputValue={newTodoInput}
+      />
+    </ScrollArea>
   );
 }
