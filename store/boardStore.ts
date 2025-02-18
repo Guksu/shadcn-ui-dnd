@@ -12,9 +12,10 @@ type BoardStore = {
   updateTodo: (boardId: string, todoId: string, todo: Todo) => void;
   deleteTodo: (boardId: string, todoId: string) => void;
   moveTodo: (
-    todoId: string,
+    targetTodoId: string,
     targetBoardId: string,
-    targetTodoId?: string
+    todoId: string,
+    boardId: string
   ) => void;
   moveBoard: (dragBoardId: string, targetBoardId: string) => void;
 };
@@ -80,65 +81,60 @@ const boardStore = create<BoardStore>()(
         })),
 
       moveTodo: (
-        todoId: string,
+        targetTodoId: string,
         targetBoardId: string,
-        targetTodoId?: string
+        todoId: string,
+        boardId: string
       ) =>
         set((state) => {
-          let movedTodo: Todo | null = null;
-          // 이동할 Todo를 찾아서 기존 보드에서 제거
-          const updatedBoards = state.boards.map((board) => {
-            if (board.todo.some((t) => t.id === todoId)) {
-              movedTodo = board.todo.find((t) => t.id === todoId) || null;
-              return {
-                ...board,
-                todo: board.todo.filter((t) => t.id !== todoId),
-              };
-            }
-            return board;
-          });
-
-          // movedTodo가 없으면 기존 상태 유지
-          if (!movedTodo) {
-            return { boards: state.boards };
-          }
-
           // 같은 보드 내에서 이동
-          if (
-            state.boards.some(
-              (b) =>
-                b.id === targetBoardId &&
-                b.todo.some((t) => t.id === targetTodoId)
-            )
-          ) {
+          if (boardId === targetBoardId) {
             return {
-              boards: updatedBoards.map((board) => {
-                if (board.id !== targetBoardId) return board;
-                const updatedTodos = [...board.todo];
-                const targetIndex = targetTodoId
-                  ? updatedTodos.findIndex((t) => t.id === targetTodoId)
-                  : -1;
+              boards: state.boards.map((b) => {
+                if (b.id === boardId) {
+                  const updatedTodos = [...b.todo];
+                  const moveIdx = updatedTodos.findIndex(
+                    (t) => t.id === todoId
+                  );
+                  const targetIndex = updatedTodos.findIndex(
+                    (t) => t.id === targetTodoId
+                  );
+                  const moveItem = updatedTodos.splice(moveIdx, 1);
 
-                if (targetIndex !== -1) {
-                  updatedTodos.splice(targetIndex, 0, movedTodo as Todo);
+                  updatedTodos.splice(targetIndex, 0, moveItem[0]);
+                  return { ...b, todo: updatedTodos };
                 } else {
-                  updatedTodos.push(movedTodo as Todo);
+                  return b;
                 }
-                return { ...board, todo: updatedTodos };
               }),
             };
           }
 
           // 다른 보드로 이동
+          const moveBoardIdx = state.boards.findIndex((b) => b.id === boardId);
+          const moveIdx = state.boards[moveBoardIdx].todo.findIndex(
+            (t) => t.id === todoId
+          );
+          const moveItem = state.boards[moveBoardIdx].todo.splice(moveIdx, 1);
+
           return {
-            boards: updatedBoards.map((board) =>
-              board.id === targetBoardId
-                ? {
-                    ...board,
-                    todo: [...board.todo, movedTodo as Todo],
-                  }
-                : board
-            ),
+            boards: state.boards.map((b) => {
+              if (b.id === targetBoardId) {
+                const updatedTodos = [...b.todo];
+                const targetIndex = updatedTodos.findIndex(
+                  (t) => t.id === targetTodoId
+                );
+
+                updatedTodos.splice(targetIndex, 0, moveItem[0]);
+
+                return {
+                  ...b,
+                  todo: updatedTodos,
+                };
+              } else {
+                return b;
+              }
+            }),
           };
         }),
 
