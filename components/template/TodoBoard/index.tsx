@@ -35,7 +35,7 @@ export default function TodoBoard({ boardData }: Props) {
 
   const [, drop] = useDrop({
     accept: BOARD_DND_TYPE,
-    hover: (item: BoardDropItem) => {
+    drop: (item: BoardDropItem) => {
       if (item.id !== id) {
         moveBoard(item.id, id);
       }

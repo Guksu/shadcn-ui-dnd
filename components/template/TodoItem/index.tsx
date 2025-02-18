@@ -29,7 +29,7 @@ export default function TodoItem({ todoData, boardId }: Props) {
 
   const [, drop] = useDrop({
     accept: TODO_DND_TYPE,
-    hover: (item: TodoDropItem) => {
+    drop: (item: TodoDropItem) => {
       if (item.id !== todoData.id) {
         moveTodo(todoData.id, boardId, item.id, item.boardId);
       }

@@ -101,7 +101,12 @@ const boardStore = create<BoardStore>()(
                   );
                   const moveItem = updatedTodos.splice(moveIdx, 1);
 
-                  updatedTodos.splice(targetIndex, 0, moveItem[0]);
+                  if (targetIndex === -1) {
+                    updatedTodos.push(moveItem[0]);
+                  } else {
+                    updatedTodos.splice(targetIndex, 0, moveItem[0]);
+                  }
+
                   return { ...b, todo: updatedTodos };
                 } else {
                   return b;
@@ -124,8 +129,11 @@ const boardStore = create<BoardStore>()(
                 const targetIndex = updatedTodos.findIndex(
                   (t) => t.id === targetTodoId
                 );
-
-                updatedTodos.splice(targetIndex, 0, moveItem[0]);
+                if (targetIndex === -1) {
+                  updatedTodos.push(moveItem[0]);
+                } else {
+                  updatedTodos.splice(targetIndex, 0, moveItem[0]);
+                }
 
                 return {
                   ...b,
